@@ -35,6 +35,8 @@ import com.amazonaws.services.ec2.model.DescribeImagesResult;
 import com.amazonaws.services.ec2.model.Image;
 import com.amazonaws.services.ec2.model.Filter;
 
+import java.io.IOException;
+
 public class awsTest {
 
 	static AmazonEC2      ec2;
@@ -76,7 +78,7 @@ public class awsTest {
 			System.out.println("  3. start instance               4. available regions      ");
 			System.out.println("  5. stop instance                6. create instance        ");
 			System.out.println("  7. reboot instance              8. list images            ");
-			System.out.println("                                 99. quit                   ");
+			System.out.println("  9. condor_status               99. quit                   ");
 			System.out.println("------------------------------------------------------------");
 			
 			System.out.print("Enter an integer: ");
@@ -144,6 +146,11 @@ public class awsTest {
 			case 8: 
 				listImages();
 				break;
+
+			case 9:
+                               System.out.print("Condor_status");
+			       condorstatus();
+			       break;
 
 			case 99: 
 				System.out.println("bye!");
@@ -341,6 +348,19 @@ public class awsTest {
 					images.getImageId(), images.getName(), images.getOwnerId());
 		}
 		
+	}
+
+        public static void condorstatus() throws IOException, InterruptedException  {
+            Runtime rt = Runtime.getRuntime();
+	    Process pc = null;
+	    try {
+		    pc = rt.exec("gnome-terminal --working-directory=/~/Download ");
+            } catch (IOException e){
+		    e.printStackTrace();
+	    } finally {
+		    pc.waitFor();
+		    pc.destroy();
+	    }
 	}
 }
 	
